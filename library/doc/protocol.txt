@@ -1,0 +1,167 @@
+// Upscale RPC library
+// Copyright (C) 2022 Flaviu C.
+
+marker
+0 000 - request
+1 001 - response
+2 010 - request-cancel
+
+payload-size-type
+0 00 - 2 byte
+1 01 - 4 bytes
+
+size-type
+0 000 -   1 byte
+1 001 -   2 bytes
+2 010 -   4 bytes
+3 011 -   8 bytes
+4 100 -  16 bytes
+5 101 -  32 bytes
+6 110 -  64 bytes
+7 111 - 128 bytes
+
+param-type
+0 00 - none
+1 01 - in-place
+2 10 - linked
+
+call-count
+0/+1 - 63/+1
+
+meta-header
+
+scheme
+0 00000 - minimal
+    <payload-size:0b>
+    <call-count:0b>
+    <context-id:0b>
+    <object-id:0b><method-id:8b> x 1
+
+0 00000 - minimal
+    <method-id:8b>
+    <param-size:
+
+request:
+    <marker:3b|scheme:5>
+    <call-count:6b>
+    <payload-size:16b or 32b>
+    <context-id:16b>
+    <object-id:8b><method-id:8b> x {call-count}
+    [<inplace-params/params-size:var>] x {call-count}
+    [<params/32 or 64b>]
+min: 2+2+2+2=8 bytes
+
+response:
+    <marker:3b|reserved:1b|packet-size-type:1b|size-type:3b|param-type:2b|context-count:6b>
+    <payload-size:16b or 32b>
+    <context-id:16b> x {context-count}
+    <call-result-count:8b> x {context-count}
+    [<inplace-result/result-size:var>] x sum({call-result-count})
+    [<result:var/32 or 64>]
+min: 2+2+2+1=7 bytes
+
+request-cancel:
+    <marker:3b|reserved:7b|context-count:6b>
+    <payload-size:16b>
+    <context-id:16b> x {context-count}
+min: 2+2+2=6 bytes
+
+REQUEST
+header
+    action: 3 (3b)
+    encoding-scheme: 0 (5b)
+payload (scheme 0)
+    payload-size: 2048 (2o)
+    context-id: 1 (2o)
+    call-count: 3 (1o)
+    calls (6o)
+        call 0
+            object-id: 1 (1o)
+            method-id: 1 (1o)
+        call 1
+            object-id: 1 (1o)
+            method-id: 2 (1o)
+        call 2
+            object-id: 1 (1o)
+            method-id: 3 (1o)
+    param-sizes
+        param-size: 123  (2o)
+        param-size: 1234 (2o)
+       - param-size: 100  (2o)
+    params-padding (6o)
+    params
+        data: .... (123o)
+        data-padding (5o)
+        data: .... (1234o)
+        data-padding (6o)
+        data: .... (100o)
+
+RESPONSE - multiple
+header
+    action: 3 (3b)
+    encoding-scheme: 0 (5b)
+payload
+    payload-size: 2048 (2o)
+    context-id-count: 3 (1o)
+
+    context-id: <a> (2o)
+    context-id: <b> (2o)
+    context-id: <c> (2o)
+
+    response-count-per-context-id: 2 (1o)
+    response-count-per-context-id: 3 (1o)
+    response-count-per-context-id: 1 (1o)
+
+    response-index: ? <1o>
+    response-index: ? <1o>
+    response-index: ? <1o>
+    response-index: ? <1o>
+    response-index: ? <1o>
+    response-index: ? <1o>
+
+    <padding>
+
+    object-and-method-ids: ? (2o)
+    object-and-method-ids: ? (2o)
+    object-and-method-ids: ? (2o)
+    object-and-method-ids: ? (2o)
+    object-and-method-ids: ? (2o)
+    object-and-method-ids: ? (2o)
+
+    <padding>
+
+    data-size: ? <2o>
+    data-size: ? <2o>
+    data-size: ? <2o>
+    data-size: ? <2o>
+    data-size: ? <2o>
+    data-size: ? <2o>
+
+    <padding>
+
+    data: ? <8o>
+    data: ? <8o>
+    data: ? <8o>
+    data: ? <8o>
+    data: ? <8o>
+    data: ? <8o>
+
+
+RESPONSE - single
+header
+    action: 3 (3b)
+    encoding-scheme: 0 (5b)
+payload
+    payload-size: 2048 (2o)
+
+    context-id: <a> (2o)
+    response-index: ? <1o>
+
+    <padding>
+
+    object-and-method-ids: ? (2o)
+
+    <padding>
+
+    data: ? <8o>
+

@@ -1,0 +1,125 @@
+<1o:action:3b|encoding_scheme:5b>
+[schema-1b=0]
+    <1o:padding>
+    [request]
+        [schema-3b]
+            [0] =>
+                <1o:payload-size>
+                <1o:conext-id>
+            [1] =>
+                <2o:payload-size>
+                <1o:conext-id>
+            [2] =>
+                <2o:payload-size>
+                <2o:conext-id>
+            [3] =>
+                <4o:payload-size>
+                <2o:conext-id>
+        <*:padding>
+        <2o:object-id:1o|method-id:1o>
+        <*:call-data>
+[schema-1b=1]
+    <1o:padding>
+    [request]
+        [schema-3b]
+            [0] => (call-data-size:1o)
+                <1o:payload-size>
+                <1o:conext-id>
+                <1o:call-count>
+            [1] => (call-data-size:2o)
+                <2o:payload-size>
+                <1o:conext-id>
+                <1o:call-count>
+            [2] => (call-data-size:2o)
+                <2o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+            [3] => (call-data-size:2o)
+                <2o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+            [4] => (call-data-size:2o)
+                <4o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+            [5] => (call-data-size:4o)
+                <4o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+        <*:padding>
+        <2o:object-id:1o|method-id:1o>
+        <2o:object-id:1o|method-id:1o>
+        <2o:object-id:1o|method-id:1o>
+        ...
+        <*:padding>
+        <*:call-data-size>
+        <*:call-data-size>
+        <*:call-data-size>
+        <*:call-data-size>
+        <*:call-data-size>
+        ...
+        <*:padding>
+        <*:call-data>
+        <*:call-data>
+        ...
+
+<1o:action:3b|encoding_scheme:5b>
+[schema-1b=0]
+    <1o:padding>
+    [response]
+        [schema]
+            [0] => (result-data-size:1o)
+                <1o:payload-size>
+                <1o:conext-id>
+            [1] => (call-data-size:2o)
+                <2o:payload-size>
+                <1o:conext-id>
+            [2] => (call-data-size:2o)
+                <2o:payload-size>
+                <2o:conext-id>
+            [3] => (call-data-size:2o)
+                <4o:payload-size>
+                <2o:conext-id>
+        <*:padding>
+        <*:call-data>
+[schema-1b=1]
+    <1o:padding>
+    [response]
+        [schema]
+            [0] => (result-data-size:1o)
+                <1o:payload-size>
+                <1o:contex-count>
+                <1o:conext-id>
+                <1o:contex-result-count>
+            [1] => (call-data-size:2o)
+                <2o:payload-size>
+                <1o:contex-count>
+                <1o:conext-id>
+                <1o:contex-result-count>
+            [2] => (call-data-size:2o)
+                <2o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+            [3] => (call-data-size:2o)
+                <2o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+            [4] => (call-data-size:2o)
+                <4o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+            [5] => (call-data-size:4o)
+                <4o:payload-size>
+                <2o:conext-id>
+                <1o:call-count>
+        <*:padding>
+        <*:call-data-size>
+        <*:call-data-size>
+        <*:call-data-size>
+        <*:call-data-size>
+        <*:call-data-size>
+        ...
+        <*:padding>
+        <*:call-data>
+        <*:call-data>
+        ...
